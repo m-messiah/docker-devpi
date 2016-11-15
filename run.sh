@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 set -x
+export LOG_FILE=/mnt/.xproc/devpi-server/xprocess.log
 export DEVPI_SERVERDIR=/mnt
 export DEVPI_CLIENTDIR=/tmp/devpi-client
 [[ -f $DEVPI_SERVERDIR/.serverversion ]] || initialize=yes
@@ -27,13 +28,13 @@ if [[ $initialize = yes ]]; then
   devpi use http://localhost:3141
   devpi login root --password=''
   devpi user -m root password="${DEVPI_PASSWORD}"
-  devpi index -y -c public pypi_whitelist='*'
+  devpi index -y -c public pypi_whitelist='*' bases=root/pypi
 fi
 # We cannot simply execute tail, because otherwise bash won't propagate
 # incoming TERM signals to tail and will hang indefinitely.  Instead, we wait
 # on tail PID and then "wait" command will interrupt on TERM (or any other)
 # signal and the script will proceed to kill_* functions which will gracefully
 # terminate child processes.
-tail -f /etc/fstab & #"$LOG_FILE" &
+tail -f "$LOG_FILE" &
 TAIL_PID=$!
 wait $TAIL_PID

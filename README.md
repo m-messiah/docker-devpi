@@ -4,11 +4,6 @@
 This repository contains **Dockerfile** of [Devpi](http://doc.devpi.net/) for [Docker](https://www.docker.io/)'s [trusted build](https://index.docker.io/u/scrapinghub/devpi/) published to the public [Docker Registry](https://index.docker.io/).
 
 
-### Dependencies
-
-* [dockerfile/ubuntu](http://dockerfile.github.io/#/ubuntu)
-
-
 ### Installation
 
 1. Install [Docker](https://www.docker.io/).
